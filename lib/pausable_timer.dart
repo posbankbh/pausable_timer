@@ -195,6 +195,7 @@ final class PausableTimer implements Timer {
   void start() {
     if (isActive || isExpired || isCancelled) return;
     _startTimer();
+    _isHardPaused = false;
   }
 
   /// Pauses an active timer.
@@ -223,6 +224,7 @@ final class PausableTimer implements Timer {
     if (isActive) {
       _timer!.cancel(); // it has to be non-null if it's active
       _startTimer();
+      _isHardPaused = false;
     }
   }
 
