@@ -228,8 +228,8 @@ final class PausableTimer implements Timer {
 
   /// Resume the timer.
   ///
-  void resume([bool doReset = false]) {
-    _isHardPaused = false;
+  void resume({bool removeHardPause = false, bool doReset = false}) {
+    if (removeHardPause) _isHardPaused = false;
 
     if (doReset) {
       reset();
