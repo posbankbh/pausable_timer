@@ -191,9 +191,9 @@ final class PausableTimer implements Timer {
   /// Starts counting for the original duration or from where it was left of if
   /// [pause]ed.
   ///
-  /// It does nothing if the timer [isActive], [isExpired] or [isCancelled] or [isHardPaused].
+  /// It does nothing if the timer [isActive], [isExpired] or [isCancelled].
   void start() {
-    if (isActive || isExpired || isCancelled || isHardPaused) return;
+    if (isActive || isExpired || isCancelled) return;
     _startTimer();
   }
 
@@ -220,7 +220,7 @@ final class PausableTimer implements Timer {
   void reset() {
     if (isCancelled) return;
     _stopwatch = clock.stopwatch();
-    if (isActive && !isHardPaused) {
+    if (isActive) {
       _timer!.cancel(); // it has to be non-null if it's active
       _startTimer();
     }
@@ -229,7 +229,11 @@ final class PausableTimer implements Timer {
   /// Resume the timer.
   ///
   void resume({bool removeHardPause = false, bool doReset = false}) {
-    if (removeHardPause) _isHardPaused = false;
+    if (removeHardPause) {
+      _isHardPaused = false;
+    } else {
+      if (isHardPaused) return;
+    }
 
     if (doReset) {
       reset();
