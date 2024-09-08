@@ -204,7 +204,7 @@ final class PausableTimer implements Timer {
   /// fired until it is [start]ed again.
   ///
   /// Nothing happens if the timer [isPaused], [isExpired] or [isCancelled].
-  void pause([bool hard = false]) {
+  void pause({bool hard = false}) {
     if (hard) _isHardPaused = true;
 
     _stopwatch?.stop();
